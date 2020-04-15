@@ -15,6 +15,10 @@ do
 	case $random in
 		$MOVE_FORWARD)
 			position=$(($position+$dieNumber))
+                        if [ $position -gt $GOAL ]
+                        then
+                                position=$(($position-$dieNumber))
+                        fi
 		;;
         	$MOVE_BACKWARD)
                 	position=$(($position-$dieNumber))
