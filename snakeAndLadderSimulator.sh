@@ -6,26 +6,35 @@ NO_PLAY=0
 NUMBER_OF_PLAYERS=1
 GOAL=100
 START_POSITION=0
+#variable
+numOfRolls=0
 
-position=$START_POSITION
-while [ $position -lt $GOAL ]
+position[$numOfRolls]=$START_POSITION
+while [ ${position[$numOfRolls]} -lt $GOAL ]
 do
+	prevRoll=$numOfRolls
+	numOfRolls=$(($numOfRolls+1))
 	dieNumber=$((RANDOM%6+1))
 	random=$((RANDOM%3))
 	case $random in
 		$MOVE_FORWARD)
-			position=$(($position+$dieNumber))
-                        if [ $position -gt $GOAL ]
+			position[$numOfRolls]=$((${position[$prevRoll]}+$dieNumber))
+                        if [ ${position[$numOfRolls]} -gt $GOAL ]
                         then
-                                position=$(($position-$dieNumber))
+                                position[$numOfRolls]=${position[$prevRoll]}
                         fi
 		;;
         	$MOVE_BACKWARD)
-                	position=$(($position-$dieNumber))
-        		if [ $position -lt $START_POSITION ]
+                	position[$numOfRolls]=$((${position[$prevRoll]}-$dieNumber))
+        		if [ ${position[$numOfRolls]} -lt $START_POSITION ]
 			then
-				position=$START_POSITION
+				position[$numOfRolls]=$START_POSITION
 			fi
+		;;
+		*)
+			position[$numOfRolls]=${position[$prevRoll]}
 		;;
 	esac
 done
+echo Total number of die rolls = $numOfRolls
+echo For die roll numbers ${!position[@]} positions are ${position[@]} respectively
