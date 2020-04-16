@@ -7,48 +7,46 @@ NUMBER_OF_PLAYERS=2
 GOAL=100
 START_POSITION=0
 #variable
-playNextTurn=yes
-declare -A position
+playNextTurn=1
+declare -A positionOfPlayer
 
 for (( player=1; player<=$NUMBER_OF_PLAYERS; player++ ))
 do
-	position[$player]=$START_POSITION
+	positionOfPlayer[$player]=$START_POSITION
 done
 
-function findPosition(){
-	for (( player=1; player<=$NUMBER_OF_PLAYERS; player++ ))
-        do
-		dieNumber=$((RANDOM%6+1))
-		random=$((RANDOM%3))
-		case $random in
-			$MOVE_FORWARD)
-				position[$player]=$((${position[$player]}+$dieNumber))
-                        	if [ ${position[$player]} -gt $GOAL ]
-                        	then
-                                	position[$player]=$((${position[$player]}-$dieNumber))
-                        	fi
-			;;
-        		$MOVE_BACKWARD)
-                		position[$player]=$((${position[$player]}-$dieNumber))
-        			if [ ${position[$player]} -lt $START_POSITION ]
-				then
-					position[$player]=$START_POSITION
-				fi
-			;;
-		esac
-	done
+function findPositionOfPlayer(){
+	dieNumber=$((RANDOM%6+1))
+	random=$((RANDOM%3))
+	case $random in
+		$MOVE_FORWARD)
+			positionOfPlayer[$player]=$((${positionOfPlayer[$player]}+$dieNumber))
+                       	if [ ${positionOfPlayer[$player]} -gt $GOAL ]
+                       	then
+                               	positionOfPlayer[$player]=$((${positionOfPlayer[$player]}-$dieNumber))
+                       	fi
+		;;
+       		$MOVE_BACKWARD)
+               		positionOfPlayer[$player]=$((${positionOfPlayer[$player]}-$dieNumber))
+       			if [ ${positionOfPlayer[$player]} -lt $START_POSITION ]
+			then
+				positionOfPlayer[$player]=$START_POSITION
+			fi
+		;;
+	esac
 }
 
-while [ $playNextTurn = yes ]
+while [ $playNextTurn = 1 ]
 do
-	#calling function to find position of players
-	findPosition
 	for (( player=1; player<=$NUMBER_OF_PLAYERS; player++ ))
 	do
-		if [ ${position[$player]} -eq $GOAL ]
+		#calling function to find position of players
+		findPositionOfPlayer
+		if [ ${positionOfPlayer[$player]} -eq $GOAL ]
 		then
 			winner=$player
-			playNextTurn=no
+			playNextTurn=0
+			break;
 		fi
 	done
 done
