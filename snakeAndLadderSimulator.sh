@@ -10,7 +10,7 @@ START_POSITION=0
 playNextTurn=1
 declare -A positionOfPlayer
 
-function initialseStartingPositionOfPlayers(){
+function initialiseStartingPositionOfPlayers(){
 	for (( player=1; player<=$NUMBER_OF_PLAYERS; player++ ))
 	do
 		positionOfPlayer[$player]=$START_POSITION
@@ -39,7 +39,7 @@ function findPositionOfPlayer(){
 }
 
 function findWinnerAmongPlayers(){
-	initialseStartingPositionOfPlayers
+	initialiseStartingPositionOfPlayers
 	while [ $playNextTurn = 1 ]
 	do
 		for (( player=1; player<=$NUMBER_OF_PLAYERS; player++ ))
