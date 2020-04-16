@@ -3,15 +3,15 @@
 MOVE_FORWARD=1
 MOVE_BACKWARD=2
 NO_PLAY=0
-NUMBER_OF_PLAYERS=2
 GOAL=100
 START_POSITION=0
 #variable
 playNextTurn=1
 declare -A positionOfPlayer
 
+read -p "Enter num of players " numOfPlayers
 function initialiseStartingPositionOfPlayers(){
-	for (( player=1; player<=$NUMBER_OF_PLAYERS; player++ ))
+	for (( player=1; player<=$numOfPlayers; player++ ))
 	do
 		positionOfPlayer[$player]=$START_POSITION
 	done
@@ -42,7 +42,7 @@ function findWinnerAmongPlayers(){
 	initialiseStartingPositionOfPlayers
 	while [ $playNextTurn = 1 ]
 	do
-		for (( player=1; player<=$NUMBER_OF_PLAYERS; player++ ))
+		for (( player=1; player<=$numOfPlayers; player++ ))
 		do
 			#calling function to find position of players
 			findPositionOfPlayer
