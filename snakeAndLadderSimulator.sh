@@ -35,7 +35,7 @@ function findPositionOfPlayer(){
 				positionOfPlayer[$player]=$START_POSITION
 			fi
 		;;
-			$NO_PLAY)
+		$NO_PLAY)
                         positionOfPlayer[$player]=$((${positionOfPlayer[$player]}+0))
                 ;;
 	esac
