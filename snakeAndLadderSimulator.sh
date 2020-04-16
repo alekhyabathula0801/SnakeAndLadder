@@ -36,18 +36,22 @@ function findPositionOfPlayer(){
 	esac
 }
 
-while [ $playNextTurn = 1 ]
-do
-	for (( player=1; player<=$NUMBER_OF_PLAYERS; player++ ))
+function findWinnerAmongPlayers(){
+	while [ $playNextTurn = 1 ]
 	do
-		#calling function to find position of players
-		findPositionOfPlayer
-		if [ ${positionOfPlayer[$player]} -eq $GOAL ]
-		then
-			winner=$player
-			playNextTurn=0
-			break;
-		fi
+		for (( player=1; player<=$NUMBER_OF_PLAYERS; player++ ))
+		do
+			#calling function to find position of players
+			findPositionOfPlayer
+			if [ ${positionOfPlayer[$player]} -eq $GOAL ]
+			then
+				winner=$player
+				playNextTurn=0
+				break;
+			fi
+		done
 	done
-done
-echo winner is $winner
+}
+# calling function to find winner
+findWinnerAmongPlayers
+echo Winner is player $winner
