@@ -10,10 +10,12 @@ START_POSITION=0
 playNextTurn=1
 declare -A positionOfPlayer
 
-for (( player=1; player<=$NUMBER_OF_PLAYERS; player++ ))
-do
-	positionOfPlayer[$player]=$START_POSITION
-done
+function initialseStartingPositionOfPlayers(){
+	for (( player=1; player<=$NUMBER_OF_PLAYERS; player++ ))
+	do
+		positionOfPlayer[$player]=$START_POSITION
+	done
+}
 
 function findPositionOfPlayer(){
 	dieNumber=$((RANDOM%6+1))
@@ -37,6 +39,7 @@ function findPositionOfPlayer(){
 }
 
 function findWinnerAmongPlayers(){
+	initialseStartingPositionOfPlayers
 	while [ $playNextTurn = 1 ]
 	do
 		for (( player=1; player<=$NUMBER_OF_PLAYERS; player++ ))
